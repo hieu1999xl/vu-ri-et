@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.0.39/css/materialdesignicons.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons'>
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/vuetify@1.3.7/dist/vuetify.min.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="app">
+  <v-app>
+    <template>
+      <div>
+         <v-toolbar flat>
+            <v-card-title class='title'>
+              CRUD PROJECT
+            </v-card-title>
+              <v-spacer></v-spacer>
+                 <v-flex xs12 sm6 md3>
+              <v-text-field align-center v-model="search" clearable append-icon="search" label="Search" single-line hide-details></v-text-field>  
+              </v-flex>   
+              <v-dialog v-model="dialog" max-width="500px">
+                <v-btn slot="activator" color="dark" dark class="mb-2">New Item</v-btn>
+                <v-card>
+                  <form>
+                  <v-card-title>
+                    <span class="headline">{{ formTitle }}</span>
+                  </v-card-title>
+            
+                  <v-card-text>
+                    <v-container grid-list-md>
+                      <v-layout wrap>
+                        <v-flex xs12 sm6 md12>
+                          <v-text-field  v-model="editedItem.investor" label="Chủ đầu tư"></v-text-field>
+                        </v-flex>
+                        <v-flex xs12 sm6 md12>
+                          <v-text-field v-model="editedItem.project" label="Dự án"></v-text-field>
+                        </v-flex>
+                        <v-flex xs12 sm6 md12>
+                          <v-text-field v-model="editedItem.investment" label="Số vốn (tỷ)"></v-text-field>
+                        </v-flex>
+                        <v-flex xs12 sm6 md12>
+                          <v-text-field v-model="editedItem.time" label="Thời gian triển khai (tháng)"></v-text-field>
+                        </v-flex>
+                      </v-layout>
+                    </v-container>
+                  </v-card-text>
+        
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
+                    <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
+                  </v-card-actions>
+                </form>
+                </v-card>
+              </v-dialog>
+            </v-toolbar>
+            
+            <v-data-table  :headers="headers" :items="projects" :search="search" class="elevation-1">
+              <template slot="items" slot-scope="props">
+                <td class="text-xs-left">{{ props.item.investor }}</td>
+                <td class="text-xs-left">{{ props.item.project }}</td>
+                <td class="text-xs-left">{{ props.item.investment }}</td>
+                <td class="text-xs-left">{{ props.item.time }}</td>
+                <td class="layout">
+                  <v-icon small class="mr-2" @click="editItem(props.item)"> edit</v-icon>
+                  <v-icon small @click="deleteItem(props.item)"> delete</v-icon>
+                </td>
+              </template>
+              <template slot="no-data"><v-btn color="primary" @click="initialize">Reset</v-btn></template>
+              <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                Your search for "{{ search }}" found no results.
+              </v-alert>
+            </v-data-table>
+      </div>
+      </template>
+  </v-app>
+</div>
+<!-- partial -->
+  <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/vuetify@1.3.7/dist/vuetify.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
